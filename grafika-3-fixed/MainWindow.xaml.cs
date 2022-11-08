@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -25,6 +26,9 @@ namespace grafika_3_fixed
         private double rP = 0, gP = 0, bP = 0;
         private double cValue = 0, mValue = 0, yValue = 0, kValue = 0;
         private double hValue = 0, sValue = 0, vValue = 0;
+
+        
+
         private double Cmax = 0, Cmin = 0, delta = 0;
         private bool changeFlag = false;
 
@@ -284,6 +288,8 @@ namespace grafika_3_fixed
             changeColor();
         }
 
+
+
         private void setText()
         {
             rgbText.Text = "RGB\n" + "R: " + rValue + "\nG: " + gValue + "\nB: " + bValue;
@@ -300,6 +306,20 @@ namespace grafika_3_fixed
             byteArray[1] = (byte)gValue;
             byteArray[2] = (byte)bValue;
             colorPreview.Content = "#" + Convert.ToHexString(byteArray);
+        }
+
+        private void rotation_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider slider = (Slider)sender;
+            switch (slider.Name[0])
+            {
+                case 'x':
+                    Cube.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), xslider.Value));
+                    break;
+                case 'y':
+                    Cube.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), yslider.Value));
+                    break;
+            }
         }
     }
 }
